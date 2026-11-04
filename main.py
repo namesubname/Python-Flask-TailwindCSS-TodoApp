@@ -14,7 +14,7 @@ from datetime import date as dt
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "dsghoiu348ghioanvIO#SJF(#(@#NNNoefj"
+# app["SECRET_KEY"]
 
 login_manager = LoginManager()
 login_manager.init_app(app)

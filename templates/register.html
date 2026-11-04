@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 flex min-h-screen items-center justify-center p-4 antialiased">
+
+    <div class="w-full max-w-md rounded-2xl bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+        <div class="mb-8 text-center">
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900">Создать аккаунт</h1>
+            <p class="mt-2 text-sm text-slate-500">Заполните форму для регистрации на сайте</p>
+        </div>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="mb-4 p-4 rounded-xl text-sm {% if category == 'error' %}bg-red-50 text-red-600 border border-red-100{% else %}bg-green-50 text-green-600 border border-green-100{% endif %}">
+                  {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/register" method="POST" class="space-y-4">
+            <div>
+                <label for="username" class="mb-1.5 block text-sm font-medium text-slate-700">Имя пользователя</label>
+                <div class="relative rounded-xl transition-all duration-200 focus-within:ring-2 focus-within:ring-indigo-500/20">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+                        <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </div>
+                    <input 
+                        type="text"
+                        name="username"
+                        id="username"
+                        value="{{ username if username else '' }}"
+                        placeholder="Придумайте логин"
+                        minlength="3"
+                        maxLength="20"
+                        required
+                        class="block w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all duration-200 hover:border-slate-300 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                    />
+                </div>
+            </div>
+
+            
+            <!-- Поле: Пароль -->
+            <div>
+                <label for="password" class="mb-1.5 block text-sm font-medium text-slate-700">Пароль</label>
+                <div class="relative rounded-xl transition-all duration-200 focus-within:ring-2 focus-within:ring-indigo-500/20">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+                        <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                        </svg>
+                    </div>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        placeholder="••••••••" 
+                        required
+                        class="block w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all duration-200 hover:border-slate-300 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                    />
+                </div>
+            </div>
+
+            <!-- Поле: Подтверждение пароля -->
+            <div>
+                <label for="confirm_password" class="mb-1.5 block text-sm font-medium text-slate-700">Подтвердите пароль</label>
+                <div class="relative rounded-xl transition-all duration-200 focus-within:ring-2 focus-within:ring-indigo-500/20">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+                        <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </div>
+                    <input 
+                        type="password" 
+                        name="confirm_password" 
+                        id="confirm_password" 
+                        placeholder="••••••••" 
+                        required
+                        class="block w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all duration-200 hover:border-slate-300 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                    />
+                </div>
+            </div>
+
+            <!-- Кнопка регистрации -->
+            <button 
+                type="submit" 
+                class="w-full mt-4 flex justify-center rounded-xl bg-indigo-600 py-3 px-4 text-sm font-semibold text-white shadow-md shadow-indigo-600/10 hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 cursor-pointer"
+            >
+                Создать аккаунт
+            </button>
+        </form>
+
+        <!-- Подвал карточки -->
+        <p class="mt-6 text-center text-xs text-slate-500">
+            Уже есть аккаунт? 
+            <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">Войти</a>
+        </p>
+    </div>
+
+</body>
+</html>
